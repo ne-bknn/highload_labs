@@ -1,7 +1,7 @@
 -module(file_processor).
 -export([start/0]).
--import(io, [fread/1]).
--import(file, [open/2, close/1, read/2, write/2]).
+%-import(io, [fread/1]).
+%-import(file, [open/2, close/1, read/2, write/2]).
 
 alternate(List) ->
     evens(List).
@@ -14,9 +14,7 @@ odds([H|T]) ->
     [H | evens(T)];
 odds([]) -> [].
 
-start() ->
-    % read file name from the standard input
-    {ok, [Input]} = io:fread("", "~s"),
+process(Input) ->
     % read the input file
     {ok, Bin} = file:read_file(Input),
     % open input file for writing
@@ -31,4 +29,11 @@ start() ->
     % close the input file
     file:close(In).
 
-    
+start() ->
+    % read file name from the standard input
+    {ok, [Input]} = io:fread("", "~s"),
+    {Time, _} = timer:tc(process, [Input]),
+    % write the time in milliseconds to the standard output
+    % remember that Time is in microseconds
+    % format is "time: 100" without decimals
+    io:fwrite("time: ~w~n", [Time div 1000]).

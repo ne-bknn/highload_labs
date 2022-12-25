@@ -1,5 +1,9 @@
-.PHONY: all
-all: lcg.beam max_search.beam merge_sort.beam matrix_multiplication.beam trial_division.beam file_processor.beam
+TASKS = lcg max_search merge_sort matrix_multiplication trial_division file_processor script timing
+
+BEAMS = $(addsuffix .beam, $(TASKS))
+
+.PHONY: default
+default: $(BEAMS)
 
 lcg.beam: lcg.erl
 	erlc $^
@@ -17,6 +21,12 @@ trial_division.beam: trial_division.erl
 	erlc $^
 
 file_processor.beam: file_processor.erl
+	erlc $^
+
+script.beam: script.erl
+	erlc $^
+
+timing.beam: timing.erl
 	erlc $^
 
 clean:
