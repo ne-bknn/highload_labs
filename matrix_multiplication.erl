@@ -2,7 +2,6 @@
 -export([start/1]).
 -import(io, [fwrite/2, fread/1]).
 -import(lcg, [bsd_seed/1, bsd_rand/0]).
--import(time, [tc/2]).
 
 transpose([[]|_]) ->
     [];
@@ -60,8 +59,9 @@ start(Output) ->
     A = lists:map(fun(_) -> lists:map(fun(_) -> bsd_rand() rem 2001 end, lists:seq(1,N)) end, lists:seq(1,N)),
     B = lists:map(fun(_) -> lists:map(fun(_) -> bsd_rand() rem 2001 end, lists:seq(1,N)) end, lists:seq(1,N)),
 
+    Multiply = fun(A, B) -> multiply(A, B) end,
     % multiply them
-    {Time, C} = tc(multiply, [A, B]),
+    {Time, C} = timer:tc(Multiply, [A, B]),
 
     % if output == 1, output time elapsed and primes
     % if output == 0, output only time elapsed

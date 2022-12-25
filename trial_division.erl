@@ -29,8 +29,8 @@ start(Output) ->
     % if output == 0, output only time elapsed
     case Output of
         "1" ->
-            io:fwrite("time: ~w~n", [Time div 1000]),
+            io:fwrite("time: ~w~n", [Time]),
             lists:foreach(fun(P) -> io:fwrite("~w~n", [P]) end, Primes);
         _ ->
-            io:fwrite("time: ~w~n", [Time div 1000])
+            io:fwrite("time: ~w~n", [Time])
     end.

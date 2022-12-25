@@ -32,8 +32,9 @@ process(Input) ->
 start() ->
     % read file name from the standard input
     {ok, [Input]} = io:fread("", "~s"),
-    {Time, _} = timer:tc(process, [Input]),
+    Process = fun(Input) -> process(Input) end,
+    {Time, _} = timer:tc(Process, [Input]),
     % write the time in milliseconds to the standard output
     % remember that Time is in microseconds
     % format is "time: 100" without decimals
-    io:fwrite("time: ~w~n", [Time div 1000]).
+    io:fwrite("time: ~w~n", [Time]).

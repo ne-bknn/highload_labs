@@ -16,7 +16,6 @@ start() ->
     {ok, [Output]} = io:fread("", "~s"),
 
     case Program of
-        "0" -> lcg:start(Output);
         "1.1" -> max_search:start(Output); % done
         "2.1" -> merge_sort:start(Output); % done
         "3.1" -> matrix_multiplication:start(Output); % done
